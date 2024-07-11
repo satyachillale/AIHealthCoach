@@ -12,4 +12,3 @@ tavily-python==0.3.3
 urllib3==2.2.2
 langchain_openai==0.1.14
 langchain==0.2.7
-langchain-community==0.2.7
