@@ -25,7 +25,7 @@ SECRET_KEY = "kl%^_2+ow&yo4&yqrh83$8lly4=aesb+6zf=__1$wraa0ddy5#"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["healthcoachai.pythonanywhere.com"]
 
 
 # Application definition
