@@ -2,7 +2,12 @@ from django.urls import path
 from agents.views import Agents
 
 urlpatterns = [
-    path('start_workflow/', Agents.as_view({"post": "fitness"}), name='fitness_agent'),
+    path("health_plan/", Agents.as_view({"post": "health_plan"})),
+    path(
+        "modified_health_plan/",
+        Agents.as_view({"post": "modified_health_plan"}),
+    ),
+    path("guided_health_plan/", Agents.as_view({"post": "guided_health_plan"})),
 ]
 
 
