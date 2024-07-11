@@ -56,6 +56,7 @@ MIDDLEWARE = [
 # CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins for testing, restrict this in production
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "healthcoachai.pythonanywhere.com"
 ]
 
 ROOT_URLCONF = "settings_config.urls"
