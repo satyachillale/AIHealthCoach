@@ -93,7 +93,7 @@ class NutritionAgent:
 
         else:
             self.adjusted_meal_plan = self.adjust_meal_plan(feedback)
-            return_data.update({"adjusted_meal_plan": self.adjusted_meal_plan})
+            return_data.update({"current_meal_plan": self.adjusted_meal_plan})
         return return_data
 
 

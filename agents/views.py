@@ -55,9 +55,9 @@ class Agents(GenericViewSet):
             # Save initial plans to the HealthPlan model
             health_plan_entry = HealthPlan.objects.create(
                 user=user_data_entry,
-                initial_workout_plan=initial_plans["fitness"]["workout_plan"],
-                initial_meal_plan=initial_plans["nutrition"]["meal_plan"],
-                initial_mental_health_tips=initial_plans["mental_health"][
+                initial_workout_plan=initial_plans["workout_plan"],
+                initial_meal_plan=initial_plans["meal_plan"],
+                initial_mental_health_tips=initial_plans[
                     "wellness_tips"
                 ],
             )
@@ -114,7 +114,6 @@ class Agents(GenericViewSet):
             adjusted_health_plan = workflow.adjust_plans_with_feedback(
                 feedback_data=validated_data, initial_plans=initial_plans
             )
-
             result["message"] = adjusted_health_plan
             return Response(data=result, status=status.HTTP_200_OK)
 
@@ -164,9 +163,9 @@ class Agents(GenericViewSet):
             # Save initial plans to the HealthPlan model
             health_plan_entry = HealthPlan.objects.create(
                 user=user_data_entry,
-                initial_workout_plan=guided_plans["fitness"]["workout_plan"],
-                initial_meal_plan=guided_plans["nutrition"]["meal_plan"],
-                initial_mental_health_tips=guided_plans["mental_health"][
+                initial_workout_plan=guided_plans["workout_plan"],
+                initial_meal_plan=guided_plans["meal_plan"],
+                initial_mental_health_tips=guided_plans[
                     "wellness_tips"
                 ],
             )

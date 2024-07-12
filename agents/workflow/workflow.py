@@ -61,9 +61,13 @@ class Workflow:
         with ThreadPoolExecutor() as executor:
             results = list(executor.map(lambda _: chain.invoke({}), [{}]))
 
-        # for result in results:
-        #     pprint(result)
-        return results[0]
+        return_data = {
+            "workout_plan": results[0]["fitness"]["workout_plan"],
+            "meal_plan": results[0]["nutrition"]["meal_plan"],
+            "wellness_tips": results[0]["mental_health"]["wellness_tips"]
+        }
+
+        return return_data
 
     def adjust_plans_with_feedback(self, feedback_data, initial_plans):
         print("User data: \n")
@@ -167,8 +171,12 @@ class Workflow:
         # Execute the graph for each query in parallel
         with ThreadPoolExecutor() as executor:
             results = list(executor.map(lambda _: chain.invoke({}), [{}]))
-
-        return results[0]
+        return_data = {
+            "workout_plan": results[0]["fitness"],
+            "meal_plan": results[0]["nutrition"],
+            "wellness_tips": results[0]["mental_health"]["wellness_tips"]
+        }
+        return return_data
 
     def guided_health_plan_workflow(self, knowledge_data):
         # Initialize agents
@@ -278,4 +286,10 @@ class Workflow:
         with ThreadPoolExecutor() as executor:
             results = list(executor.map(lambda _: chain.invoke({}), [{}]))
 
-        return results[0]
+        return_data = {
+            "workout_plan": results[0]["fitness"]["workout_plan"],
+            "meal_plan": results[0]["nutrition"]["meal_plan"],
+            "wellness_tips": results[0]["mental_health"]["wellness_tips"]
+        }
+
+        return return_data

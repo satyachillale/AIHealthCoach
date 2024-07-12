@@ -96,7 +96,7 @@ class FitnessAgent:
             self.adjusted_workout_plan = self.adjust_workout_plan(
                 feedback, self.current_workout_plan
             )
-            return_data.update({"adjusted_workout_plan": self.adjusted_workout_plan})
+            return_data.update({"current_workout_plan": self.adjusted_workout_plan})
         return return_data
 
 
