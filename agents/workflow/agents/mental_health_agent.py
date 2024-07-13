@@ -18,7 +18,7 @@ class MentalHealthAgent:
 
         if not feedback:
             context = self.tavily_client.get_search_context(
-                query=f"wellness tips for {self.user_data['age']} year old {self.user_data.get('gender')} person with goal to {self.user_data['mental_health_goals']}"
+                query=f"wellness tips for {self.user_data['age']} year old {self.user_data.get('gender', '')} person with goal to {self.user_data['mental_health_goals']}"
             )
 
             prompt = [
