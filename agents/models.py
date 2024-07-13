@@ -4,6 +4,7 @@ from django.db import models
 class UserData(models.Model):
     name = models.CharField(max_length=255)
     age = models.IntegerField()
+    gender = models.CharField(max_length=255)
     weight = models.FloatField()
     height = models.FloatField()
     fitness_goals = models.CharField(max_length=255)
