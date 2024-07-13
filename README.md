@@ -125,25 +125,27 @@ curl --location --request POST 'http://127.0.0.1:8000/agents/guided_health_plan/
     git clone https://github.com/Prithviraj8/AIHealthCoach.git
     cd AIHealthCoach
     ```
-
-3. **Create a Feature Branch**:
+3. **Setup local env and install requirements** <br>
+  [Follow installation steps above](#installation-steps)
+   
+4. **Create a Feature Branch**:
     ```bash
     git checkout -b feature-branch-name
     ```
 
-4. **Make Changes**:
+5. **Make Changes**:
     - Implement your changes in the feature branch.
 
-5. **Commit Changes**:
+6. **Commit Changes**:
     ```bash
     git add .
     git commit -m "Your commit message"
     ```
 
-6. **Push Changes**:
+7. **Push Changes**:
     ```bash
     git push origin feature-branch-name
     ```
 
-7. **Create a Pull Request**:
+8. **Create a Pull Request**:
     - Go to your forked repository on GitHub and click on the "Pull Request" button to submit your changes for review.
