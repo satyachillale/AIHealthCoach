@@ -16,7 +16,7 @@ class FitnessAgent:
         self.adjusted_workout_plan = None
 
     def create_workout_plan(self):
-        context = self.tavily_client.search(
+        context = self.tavily_client.get_search_context(
             query=f"workout plan for {self.user_data['age']} year old, {self.user_data['weight']} kg {self.user_data.get('gender', '')} person",
             search_depth="advanced",
         )
