@@ -21,9 +21,3 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("agents/", include("agents.urls")),
 ]
-
-# urlpatterns = [
-#     path("admin/", admin.site.urls),
-#     path("vaults/", include("vaults.urls")),
-#     path("lge/", include("lge.urls")),
-# ]

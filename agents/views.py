@@ -1,6 +1,4 @@
-from django.shortcuts import render
 from rest_framework import status
-from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
@@ -20,7 +18,6 @@ class Agents(GenericViewSet):
     # serializer_class = None  # Add this line to set the serializer_class attribute to None
 
     def get_serializer_class(self):
-        print("action: ", type(self.action))
         if self.action == "health_plan":
             return HealthPlanSerializer
         if self.action == "modified_health_plan":
@@ -29,7 +26,6 @@ class Agents(GenericViewSet):
             return GuidedHealthPlanSerializer
         return HealthPlanSerializer
 
-    # @action(detail=False, methods=['post'], url_path='health_plan')
     def health_plan(self, request):
         """One call to this api intiates the full worklow and returns the final report for the user based on
         user_data"""
@@ -57,16 +53,13 @@ class Agents(GenericViewSet):
                 user=user_data_entry,
                 initial_workout_plan=initial_plans["workout_plan"],
                 initial_meal_plan=initial_plans["meal_plan"],
-                initial_mental_health_tips=initial_plans[
-                    "wellness_tips"
-                ],
+                initial_mental_health_tips=initial_plans["wellness_tips"],
             )
             return Response(data=result, status=status.HTTP_200_OK)
         except Exception as e:
             result["error"] = str(e)
             return Response(data=result, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    # @action(detail=False, methods=['post'], url_path='modified_health_plan')
     def modified_health_plan(self, request):
         """
         This api returns the workout plan for the user based on the user_data and feedback
@@ -81,7 +74,6 @@ class Agents(GenericViewSet):
 
         try:
             user_data_entry = UserData.objects.latest("id")
-            print(user_data_entry.name)
             user_data = {
                 "name": user_data_entry.name,
                 "age": user_data_entry.age,
@@ -121,7 +113,6 @@ class Agents(GenericViewSet):
             result["error"] = str(e)
             return Response(data=result, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    # @action(detail=False, methods=['post'], url_path='guided_health_plan')
     def guided_health_plan(self, request):
         result = {"message": None, "error": None}
         serializer = GuidedHealthPlanSerializer
@@ -165,9 +156,7 @@ class Agents(GenericViewSet):
                 user=user_data_entry,
                 initial_workout_plan=guided_plans["workout_plan"],
                 initial_meal_plan=guided_plans["meal_plan"],
-                initial_mental_health_tips=guided_plans[
-                    "wellness_tips"
-                ],
+                initial_mental_health_tips=guided_plans["wellness_tips"],
             )
             return Response(data=result, status=status.HTTP_200_OK)
         except Exception as e:

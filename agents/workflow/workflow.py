@@ -64,7 +64,7 @@ class Workflow:
         return_data = {
             "workout_plan": results[0]["fitness"]["workout_plan"],
             "meal_plan": results[0]["nutrition"]["meal_plan"],
-            "wellness_tips": results[0]["mental_health"]["wellness_tips"]
+            "wellness_tips": results[0]["mental_health"]["wellness_tips"],
         }
 
         return return_data
@@ -96,7 +96,6 @@ class Workflow:
         graph = Graph()
 
         # Add nodes for each agent task
-        # graph.add_node("fitness", lambda _: fitness_agent.start(fitness_feedback))
         graph.add_node(
             "fitness",
             lambda x: (
@@ -105,7 +104,6 @@ class Workflow:
                 else fitness_agent.current_workout_plan
             ),
         )
-        # graph.add_node("nutrition", lambda _: nutrition_agent.start(nutrition_feedback))
         graph.add_node(
             "nutrition",
             lambda x: (
@@ -114,7 +112,6 @@ class Workflow:
                 else nutrition_agent.current_meal_plan
             ),
         )
-        # graph.add_node("mental_health", lambda _: mental_health_agent.start(mental_health_feedback))
         graph.add_node(
             "mental_health",
             lambda x: (
@@ -134,32 +131,8 @@ class Workflow:
 
         # Add edges for initial plan creation and feedback collection
         graph.add_edge("fitness", "nutrition")
-        # graph.add_edge("adjust_fitness", "nutrition")
         graph.add_edge("nutrition", "mental_health")
-        # graph.add_edge("adjust_nutrition", "mental_health")
-        # graph.add_edge("mental_health", "adjust_mental_health")
         graph.add_edge("mental_health", "progress_report")
-
-        # # Conditional edge for fitness feedback
-        # graph.add_conditional_edges(
-        #     source="fitness",
-        #     path=lambda _: "adjust_fitness" if fitness_feedback else "nutrition",
-        #     path_map={"adjust_fitness": "adjust_fitness", "nutrition": "nutrition"}
-        # )
-        #
-        # # Conditional edge for nutrition feedback
-        # graph.add_conditional_edges(
-        #     source="nutrition",
-        #     path=lambda _: "adjust_nutrition" if nutrition_feedback else "mental_health",
-        #     path_map={"adjust_nutrition": "adjust_nutrition", "mental_health": "mental_health"}
-        # )
-        #
-        # # Conditional edge for mental health feedback
-        # graph.add_conditional_edges(
-        #     source="mental_health",
-        #     path=lambda _: "adjust_mental_health" if mental_health_feedback else "progress_report",
-        #     path_map={"adjust_mental_health": "adjust_mental_health", "progress_report": "progress_report"}
-        # )
 
         # Set up start and end nodes
         graph.set_entry_point("fitness")
@@ -174,7 +147,7 @@ class Workflow:
         return_data = {
             "workout_plan": results[0]["fitness"],
             "meal_plan": results[0]["nutrition"],
-            "wellness_tips": results[0]["mental_health"]["wellness_tips"]
+            "wellness_tips": results[0]["mental_health"]["wellness_tips"],
         }
         return return_data
 
@@ -188,13 +161,6 @@ class Workflow:
         fitness_feedback = knowledge_data.get("fitness_feedback")
         nutrition_feedback = knowledge_data.get("nutrition_feedback")
         mental_health_feedback = knowledge_data.get("mental_health_feedback")
-
-        # workout_plan = initial_plans["workout_plan"]
-        # meal_plan = initial_plans["meal_plan"]
-        # wellness_tips = initial_plans["wellness_tips"]
-        # fitness_agent.current_workout_plan = workout_plan
-        # nutrition_agent.current_meal_plan = meal_plan
-        # mental_health_agent.wellness_tips = wellness_tips
 
         # Define a LangGraph graph
         graph = Graph()
@@ -289,7 +255,7 @@ class Workflow:
         return_data = {
             "workout_plan": results[0]["fitness"]["workout_plan"],
             "meal_plan": results[0]["nutrition"]["meal_plan"],
-            "wellness_tips": results[0]["mental_health"]["wellness_tips"]
+            "wellness_tips": results[0]["mental_health"]["wellness_tips"],
         }
 
         return return_data

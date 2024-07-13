@@ -1,17 +1,5 @@
 from rest_framework import serializers
 
-"""
- user_data = {
-        "name": "Prithviraj",
-        "age": 25,
-        "weight": 94,
-        "height": 186,
-        "fitness_goals": "lose fat and gain muscle",
-        "dietary_preferences": "non veg",
-        "mental_health_goals": "lose fat and maintain muscle"
-    }
-"""
-
 
 class HealthPlanSerializer(serializers.Serializer):
     name = serializers.CharField(required=True)
