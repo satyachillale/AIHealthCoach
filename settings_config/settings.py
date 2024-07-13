@@ -25,9 +25,11 @@ SECRET_KEY = "kl%^_2+ow&yo4&yqrh83$8lly4=aesb+6zf=__1$wraa0ddy5#"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["healthcoachai.pythonanywhere.com",
-                 "127.0.0.1",
-                 "https://health-coach-ai.vercel.app"]
+ALLOWED_HOSTS = [
+    "healthcoachai.pythonanywhere.com",
+    "127.0.0.1",
+    "https://health-coach-ai.vercel.app",
+]
 
 
 # Application definition
@@ -59,7 +61,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://healthcoachai.pythonanywhere.com",
-    "https://health-coach-ai.vercel.app"
+    "https://health-coach-ai.vercel.app",
 ]
 
 ROOT_URLCONF = "settings_config.urls"
