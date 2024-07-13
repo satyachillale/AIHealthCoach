@@ -113,3 +113,36 @@ curl --location --request POST 'http://127.0.0.1:8000/agents/guided_health_plan/
     "mental_health_feedback": "All good here"
 }'
 ```
+
+## Contributing
+
+1. **Fork the Repository**:
+    - Click on the "Fork" button at the top right of this repository's page.
+
+2. **Clone Your Fork**:
+    ```bash
+    git clone https://github.com/Prithviraj8/AIHealthCoach.git
+    cd AIHealthCoach
+    ```
+
+3. **Create a Feature Branch**:
+    ```bash
+    git checkout -b feature-branch-name
+    ```
+
+4. **Make Changes**:
+    - Implement your changes in the feature branch.
+
+5. **Commit Changes**:
+    ```bash
+    git add .
+    git commit -m "Your commit message"
+    ```
+
+6. **Push Changes**:
+    ```bash
+    git push origin feature-branch-name
+    ```
+
+7. **Create a Pull Request**:
+    - Go to your forked repository on GitHub and click on the "Pull Request" button to submit your changes for review.
