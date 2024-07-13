@@ -14,6 +14,7 @@ class FitnessAgent:
         self.tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
         self.current_workout_plan = None
         self.adjusted_workout_plan = None
+        self.feedback = None
 
     def create_workout_plan(self):
         context = self.tavily_client.get_search_context(
