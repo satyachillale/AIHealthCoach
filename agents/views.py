@@ -15,7 +15,6 @@ from agents.models import UserData, HealthPlan
 
 
 class Agents(GenericViewSet):
-    # serializer_class = None  # Add this line to set the serializer_class attribute to None
 
     def get_serializer_class(self):
         if self.action == "health_plan":
