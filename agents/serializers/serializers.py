@@ -11,6 +11,10 @@ class HealthPlanSerializer(serializers.Serializer):
     dietary_preferences = serializers.CharField(required=True)
     mental_health_goals = serializers.CharField(required=True)
 
+    def validate(self, attrs):
+        if attrs['gender'].lower() != "male" and attrs['gender'].lower() != "female":
+            attrs['gender'] = ""
+        return attrs
 
 class ModifiedHealthPlanSerializer(serializers.Serializer):
     fitness_feedback = serializers.CharField()
@@ -30,3 +34,8 @@ class GuidedHealthPlanSerializer(serializers.Serializer):
     fitness_feedback = serializers.CharField(required=False, default=None)
     nutrition_feedback = serializers.CharField(required=False, default=None)
     mental_health_feedback = serializers.CharField(required=False, default=None)
+
+    def validate_gender(self, value):
+        if value.lower() == "prefer to not say":
+            return ""
+        return value
