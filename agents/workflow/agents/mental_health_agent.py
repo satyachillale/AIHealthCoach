@@ -12,6 +12,7 @@ class MentalHealthAgent:
         self.user_data = user_data
         self.tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
         self.wellness_tips = None
+        self.feedback = None
 
     def provide_wellness_tips(self, feedback=None):
         mental_health_goals = self.user_data["mental_health_goals"]
@@ -69,7 +70,7 @@ class MentalHealthAgent:
     def start(self, feedback=None):
         return_data = dict
         if not feedback:
-            self.wellness_tips = self.provide_wellness_tips(feedback)
+            self.wellness_tips = self.provide_wellness_tips()
             return_data.update({"wellness_tip": self.wellness_tips})
         else:
             self.wellness_tips = self.provide_wellness_tips(feedback)

@@ -162,6 +162,10 @@ class Workflow:
         nutrition_feedback = knowledge_data.get("nutrition_feedback")
         mental_health_feedback = knowledge_data.get("mental_health_feedback")
 
+        fitness_agent.feedback = fitness_feedback
+        nutrition_agent.feedback = nutrition_feedback
+        mental_health_agent.feedback = mental_health_feedback
+
         # Define a LangGraph graph
         graph = Graph()
 

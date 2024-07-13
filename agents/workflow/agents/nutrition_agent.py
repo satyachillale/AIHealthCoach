@@ -13,6 +13,7 @@ class NutritionAgent:
         self.tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
         self.current_meal_plan = None
         self.adjusted_meal_plan = None
+        self.feedback = None
 
     def create_meal_plan(self):
         context = self.tavily_client.get_search_context(
