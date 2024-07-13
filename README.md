@@ -7,8 +7,6 @@ This repository contains the backend implementation for the AI Health Coach proj
 1. [Project Overview](#project-overview)
 2. [Setup and Installation](#setup-and-installation)
 3. [API Documentation](#api-documentation)
-4. [Usage](#usage)
-5. [Contributing](#contributing)
 
 ## Project Overview
 
