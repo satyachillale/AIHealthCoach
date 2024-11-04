@@ -12,6 +12,7 @@ from pprint import pprint
 
 from agents.workflow import Workflow
 from agents.models import UserData, HealthPlan
+from analytics.components import populate_query_db
 
 
 class Agents(GenericViewSet):
@@ -35,6 +36,9 @@ class Agents(GenericViewSet):
         validated_data = serializer.validated_data
         print("request data: \n")
         pprint(validated_data)
+
+        # call to the components.py function - query db
+        populate_query_db(request.user, validated_data)
 
         try:
             user_data_entry = UserData.objects.create(**validated_data)
@@ -161,3 +165,5 @@ class Agents(GenericViewSet):
         except Exception as e:
             result["error"] = str(e)
             return Response(data=result, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    # create two APIs to expose the query and workflow dbs
