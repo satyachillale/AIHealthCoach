@@ -2,6 +2,7 @@ from django.db import models
 
 
 class UserData(models.Model):
+    userId = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     age = models.IntegerField()
     gender = models.CharField(max_length=255)
@@ -21,5 +22,3 @@ class HealthPlan(models.Model):
     initial_meal_plan = models.JSONField(null=True, blank=True)
     initial_mental_health_tips = models.JSONField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
-# create two dbs - query and workflow

@@ -38,7 +38,7 @@ class Agents(GenericViewSet):
         pprint(validated_data)
 
         # call to the components.py function - query db
-        populate_query_db(request.user, validated_data)
+        populate_query_db(validated_data)
 
         try:
             user_data_entry = UserData.objects.create(**validated_data)
