@@ -79,11 +79,11 @@ class MentalHealthAgent:
         if not feedback:
             self.wellness_tips = self.provide_wellness_tips()
             endTime = timezone.now()
-            self.tokens_produced = count_characters_in_json(self.wellness_tips)
+            self.tokens_produced = count_characters_in_json(self.wellness_tips) // 4
             return_data.update({"wellness_tip": self.wellness_tips})
         else:
             self.wellness_tips = self.provide_wellness_tips(feedback)
-            self.tokens_produced = count_characters_in_json(self.wellness_tips)
+            self.tokens_produced = count_characters_in_json(self.wellness_tips) // 4
             return_data.update({"wellness_tip": self.wellness_tips})
         populate_workflow_db(self.user_data, self.nodeId, self.tokens_produced, startTime, endTime)
         return return_data

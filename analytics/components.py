@@ -30,7 +30,7 @@ def populate_workflow_db(user_data_instance, nodeId, tokens, startTime, endTime)
     workflow = Workflow.objects.create(
         queryId=query_instance,
         nodeId=nodeId,
-        tokens=tokens,
-        startTime=startTime,
-        endTime=endTime
+        token_usage=tokens,
+        startTimestamp=startTime,
+        endTimestamp=endTime
     )

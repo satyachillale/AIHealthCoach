@@ -67,7 +67,7 @@ class ProgressTrackingAgent:
         return_data = dict
         return_data.update({"progress": self.generate_report()})
         endTime = timezone.now()
-        self.tokens_produced = count_characters_in_json(self.return_data)
+        self.tokens_produced = count_characters_in_json(self.return_data) // 4
         populate_workflow_db(self.user_data, self.nodeId, self.tokens_produced, startTime, endTime)
         return return_data
 

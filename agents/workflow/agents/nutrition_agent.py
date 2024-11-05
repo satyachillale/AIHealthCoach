@@ -97,12 +97,12 @@ class NutritionAgent:
         if not feedback:
             self.current_meal_plan = self.create_meal_plan()
             endTime = timezone.now()
-            self.tokens_produced = count_characters_in_json(self.current_meal_plan)
+            self.tokens_produced = count_characters_in_json(self.current_meal_plan) // 4
             return_data.update({"current_meal_plan": self.current_meal_plan})
 
         else:
             self.adjusted_meal_plan = self.adjust_meal_plan(feedback)
-            self.tokens_produced = count_characters_in_json(self.adjusted_meal_plan)
+            self.tokens_produced = count_characters_in_json(self.adjusted_meal_plan) // 4
             return_data.update({"current_meal_plan": self.adjusted_meal_plan})
         populate_workflow_db(self.user_data, self.nodeId, self.tokens_produced, startTime, endTime)
         return return_data
