@@ -21,7 +21,7 @@ def populate_query_db(user_data_instance):
         query=query_text
     )
 
-def populate_workflow_db(user_data_instance, nodeId):
+def populate_workflow_db(user_data_instance, nodeId, tokens, startTime, endTime):
     """Extracts specific fields from validated data and populates the Query model."""
     # Extract fields
     query_instance = Query.objects.get(queryId=user_data_instance.get("queryId", []))
@@ -29,5 +29,8 @@ def populate_workflow_db(user_data_instance, nodeId):
     # Create a new Query object with the foreign key to UserData
     workflow = Workflow.objects.create(
         queryId=query_instance,
-        nodeId=nodeId
+        nodeId=nodeId,
+        tokens=tokens,
+        startTime=startTime,
+        endTime=endTime
     )
