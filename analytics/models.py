@@ -2,10 +2,10 @@ from django.db import models
 from agents.models import UserData
 
 class Query(models.Model):
-    query_id = models.AutoField(primary_key=True)
-    userId = models.ForeignKey(UserData, on_delete=models.CASCADE)  # User who made the query
+    queryId = models.OneToOneField(UserData, on_delete=models.CASCADE, primary_key=True)
     query = models.TextField()  # Stores the query text
     timestamp = models.DateTimeField(auto_now_add=True)  # Automatically sets the current timestamp
+
 
 # class Workflow(models.Model):
 #     query = models.ForeignKey(Query, on_delete=models.CASCADE)  # Related Query
