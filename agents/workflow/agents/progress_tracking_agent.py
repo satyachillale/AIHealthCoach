@@ -5,7 +5,7 @@ from langchain.adapters.openai import convert_openai_messages
 from langchain_openai import ChatOpenAI
 from tavily import TavilyClient
 from pprint import pprint
-
+from analytics.components import populate_workflow_db
 
 class ProgressTrackingAgent:
     def __init__(self, user_data):
@@ -13,6 +13,7 @@ class ProgressTrackingAgent:
         self.llm = ChatOpenAI()
         self.progress = {}
         self.tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+        self.nodeId = 4
 
     def track_progress(
         self, fitness_feedback, nutrition_feedback, mental_health_feedback
@@ -59,6 +60,8 @@ class ProgressTrackingAgent:
         return result
 
     def start(self):
+        # save workflow data here
+        populate_workflow_db(self.user_data, self.nodeId)
         return_data = dict
         return_data.update({"progress": self.generate_report()})
         return return_data

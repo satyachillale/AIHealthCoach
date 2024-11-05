@@ -39,6 +39,7 @@ class Agents(GenericViewSet):
 
         try:
             user_data_entry = UserData.objects.create(**validated_data)
+            validated_data["queryId"] = user_data_entry.queryId
 
             # call to the components.py function - query db
             populate_query_db(user_data_entry)
