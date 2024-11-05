@@ -37,11 +37,11 @@ class Agents(GenericViewSet):
         print("request data: \n")
         pprint(validated_data)
 
-        # call to the components.py function - query db
-        populate_query_db(validated_data)
-
         try:
             user_data_entry = UserData.objects.create(**validated_data)
+            
+            # call to the components.py function - query db
+            populate_query_db(validated_data)
         except Exception as e:
             result["error"] = str(e)
             return Response(data=result, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

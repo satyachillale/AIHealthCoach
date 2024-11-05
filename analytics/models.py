@@ -7,9 +7,6 @@ class Query(models.Model):
     query = models.TextField()  # Stores the query text
     timestamp = models.DateTimeField(auto_now_add=True)  # Automatically sets the current timestamp
 
-    def __str__(self):
-        return f"Query {self.query_id} by User {self.user_id}"
-
 # class Workflow(models.Model):
 #     query = models.ForeignKey(Query, on_delete=models.CASCADE)  # Related Query
 #     node_id = models.IntegerField()  # Node ID
