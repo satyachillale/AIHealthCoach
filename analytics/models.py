@@ -3,17 +3,15 @@ from django.contrib.auth.models import (
 )  # Assumes you're using Django's default User model
 from django.db import models
 
+from agents.models import UserData
+
 
 class Query(models.Model):
-    query_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # User who made the query
+    queryId = models.OneToOneField(UserData, on_delete=models.CASCADE, primary_key=True)
     query = models.TextField()  # Stores the query text
     timestamp = models.DateTimeField(
         auto_now_add=True
     )  # Automatically sets the current timestamp
-
-    def __str__(self):
-        return f"Query {self.query_id} by User {self.user_id}"
 
 
 class Agent(models.Model):
@@ -36,12 +34,13 @@ class Graph(models.Model):
 
 
 class Workflow(models.Model):
-    query = models.ForeignKey(Query, on_delete=models.CASCADE)  # Related Query
-    node_id = models.IntegerField()  # Node ID
+    queryId = models.ForeignKey(
+        Query, on_delete=models.CASCADE, primary_key=False
+    )  # Related Query
+    nodeId = models.IntegerField()  # Node ID
     token_usage = models.IntegerField()  # Token usage for this node
-    timestamp = models.DateTimeField(
-        auto_now_add=True
-    )  # Automatically sets the current timestamp
+    startTimestamp = models.DateTimeField()
+    endTimestamp = models.DateTimeField()
     graph = models.ForeignKey(Graph, on_delete=models.CASCADE)
 
     def __str__(self):

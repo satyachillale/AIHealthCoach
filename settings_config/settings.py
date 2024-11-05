@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "agents",
     "analytics",
     "corsheaders",
+    "analytics",
 ]
 
 MIDDLEWARE = [
