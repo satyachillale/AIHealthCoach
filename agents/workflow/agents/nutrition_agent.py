@@ -1,13 +1,15 @@
 import json
 import os
+from pprint import pprint
 
+from django.utils import timezone
 from langchain.adapters.openai import convert_openai_messages
 from langchain_openai import ChatOpenAI
 from tavily import TavilyClient
-from pprint import pprint
-from analytics.components import populate_workflow_db
+
 from agents.utils import count_characters_in_json
-from django.utils import timezone
+from analytics.components import populate_workflow_db
+
 
 class NutritionAgent:
     def __init__(self, user_data):
@@ -16,13 +18,13 @@ class NutritionAgent:
         self.current_meal_plan = None
         self.adjusted_meal_plan = None
         self.feedback = None
-        self.nodeId = 3
+        self.agent_name = "nutrition"
         self.tokens_produced = 0
 
     def create_meal_plan(self):
         context = self.tavily_client.get_search_context(
             query=f"meal plan for {self.user_data.get('gender', '')} person who is {self.user_data['age']} year old, weighs {self.user_data['weight']} kg person with dietary preferences: {self.user_data['dietary_preferences']}",
-            search_depth="advanced"
+            search_depth="advanced",
         )
         dietary_preferences = self.user_data["dietary_preferences"]
         prompt = [
@@ -102,9 +104,13 @@ class NutritionAgent:
 
         else:
             self.adjusted_meal_plan = self.adjust_meal_plan(feedback)
-            self.tokens_produced = count_characters_in_json(self.adjusted_meal_plan) // 4
+            self.tokens_produced = (
+                count_characters_in_json(self.adjusted_meal_plan) // 4
+            )
             return_data.update({"current_meal_plan": self.adjusted_meal_plan})
-        populate_workflow_db(self.user_data, self.nodeId, self.tokens_produced, startTime, endTime)
+        populate_workflow_db(
+            self.user_data, self.agent_name, self.tokens_produced, startTime, endTime
+        )
         return return_data
 
 

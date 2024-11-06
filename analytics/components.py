@@ -1,36 +1,42 @@
 # analytics/utils.py
-from .models import Query
-from .models import Workflow
-from agents.models import UserData
 from django.shortcuts import get_object_or_404
 
-def populate_query_db(user_data_instance):
+from agents.models import UserData
+
+from .init_graph import make_graph
+from .models import Agent, AgentQuery, Query
+
+
+def populate_query_db(user_data_instance, graph):
     """Extracts specific fields from validated data and populates the Query model."""
     # Extract fields
 
-    fitness_goals = user_data_instance.fitness_goals
-    dietary_preferences = user_data_instance.dietary_preferences
-    mental_health = user_data_instance.mental_health_goals
+    fitness_goals = user_data_instance.get("fitness_goals", "NULL")
+    dietary_preferences = user_data_instance.get("dietary_preferences", "NULL")
+    mental_health = user_data_instance.get("mental_health_goals", "NULL")
 
     # Create a descriptive query based on user data
     query_text = f"Fitness Goals: {fitness_goals}, Dietary Preferences: {dietary_preferences}, Mental Health Goals: {mental_health}"
-
+    gr = make_graph(graph)
+    print("HERE")
     # Create a new Query object with the foreign key to UserData
-    query = Query.objects.create(
-        queryId=user_data_instance,
-        query=query_text
-    )
+    query, created = Query.objects.get_or_create(query_text=query_text, graph=gr)
+    return query.id
 
-def populate_workflow_db(user_data_instance, nodeId, tokens, startTime, endTime):
+
+def populate_workflow_db(user_data_instance, agent_name, tokens, startTime, endTime):
     """Extracts specific fields from validated data and populates the Query model."""
     # Extract fields
-    query_instance = Query.objects.get(queryId=user_data_instance.get("queryId", []))
-
+    query_instance, created = Query.objects.get_or_create(
+        id=user_data_instance.get("query_id", 1)
+    )
+    agent, created = Agent.objects.get_or_create(name=agent_name)
     # Create a new Query object with the foreign key to UserData
-    workflow = Workflow.objects.create(
+    agent_query, created = AgentQuery.objects.get_or_create(
         queryId=query_instance,
-        nodeId=nodeId,
+        agent=agent,
         token_usage=tokens,
         startTimestamp=startTime,
-        endTimestamp=endTime
+        endTimestamp=endTime,
     )
+

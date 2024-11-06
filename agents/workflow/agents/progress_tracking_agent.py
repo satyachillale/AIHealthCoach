@@ -1,13 +1,15 @@
 import json
 import os
+from pprint import pprint
 
+from django.utils import timezone
 from langchain.adapters.openai import convert_openai_messages
 from langchain_openai import ChatOpenAI
 from tavily import TavilyClient
-from pprint import pprint
-from analytics.components import populate_workflow_db
+
 from agents.utils import count_characters_in_json
-from django.utils import timezone
+from analytics.components import populate_workflow_db
+
 
 class ProgressTrackingAgent:
     def __init__(self, user_data):
@@ -15,7 +17,7 @@ class ProgressTrackingAgent:
         self.llm = ChatOpenAI()
         self.progress = {}
         self.tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
-        self.nodeId = 4
+        self.agent_name = "progress_report"
         self.tokens_produced = 0
 
     def track_progress(
@@ -68,7 +70,9 @@ class ProgressTrackingAgent:
         return_data.update({"progress": self.generate_report()})
         endTime = timezone.now()
         self.tokens_produced = count_characters_in_json(self.return_data) // 4
-        populate_workflow_db(self.user_data, self.nodeId, self.tokens_produced, startTime, endTime)
+        populate_workflow_db(
+            self.user_data, self.agent_name, self.tokens_produced, startTime, endTime
+        )
         return return_data
 
 
