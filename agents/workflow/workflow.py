@@ -57,7 +57,6 @@ class Workflow:
 
         # Compile the graph
         chain = graph.compile()
-        print("HERE_1")
         # call to the components.py function - query db
         id = populate_query_db(self.user_data, graph)
         self.user_data["query_id"] = id

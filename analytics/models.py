@@ -6,6 +6,13 @@ from django.db import models
 from agents.models import UserData
 
 
+# todo()
+# 1. Average response time of agent
+# 2. average token usage
+# 3. Cost accoeding to
+# 4. Model for each agent
+# 5. average interactions and per query interaction
+# 6.
 class Agent(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=100)
@@ -35,6 +42,12 @@ class Query(models.Model):
     )  # Automatically sets the current timestamp
     graph = models.ForeignKey(Graph, on_delete=models.CASCADE, null=True)
 
+    # total tokens
+    @property
+    def get_agent_queries(self):
+        print("HERE")
+        return AgentQuery.objects.filter(queryId=self)
+
 
 class AgentQuery(models.Model):
     queryId = models.ForeignKey(
@@ -44,6 +57,3 @@ class AgentQuery(models.Model):
     token_usage = models.IntegerField()  # Token usage for this node
     startTimestamp = models.DateTimeField()
     endTimestamp = models.DateTimeField()
-
-    def __str__(self):
-        return f"Workflow for Query {self.query.query_id} - Node {self.node_id}"

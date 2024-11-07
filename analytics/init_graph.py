@@ -38,7 +38,7 @@ def make_graph(graph: Graph):
     print(str(hsh))
     graph_our, created = GraphModel.objects.get_or_create(hash=hsh)
     if not created:
-        return graph_our.id
+        return graph_our
     for node in agents:
         graph_our.nodes.add(node)
     for edge in edges:
