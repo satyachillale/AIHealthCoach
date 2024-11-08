@@ -13,7 +13,7 @@ from rest_framework.serializers import (
 class AgentSerializer(ModelSerializer):
     class Meta:
         model = Agent
-        fields = ["pk", "name"]
+        fields = ["pk", "name", "model_name"]
 
 
 class EdgeSerializer(ModelSerializer):
