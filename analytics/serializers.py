@@ -36,6 +36,7 @@ class GraphSerializer(ModelSerializer):
 
 
 class AgentQuerySerializer(ModelSerializer):
+    agent = AgentSerializer()
 
     class Meta:
         model = AgentQuery
