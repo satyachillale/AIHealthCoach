@@ -1,5 +1,5 @@
 from analytics.models import Agent, AgentQuery, Edge, Graph, Query
-from django.db.models import QuerySet
+from django.db.models import Case, QuerySet, When
 from django.urls import include
 
 
@@ -21,8 +21,6 @@ def get_master_graph():
                 edge_interactions[k] += temp_edge_interactions[k]
             else:
                 edge_interactions[k] = temp_edge_interactions[k]
-    agents = agents.filter(name__neq="__end__")
-    agents |= Agent.objects.filter(name="__end__")
     return agents, edges, edge_interactions
 
 

@@ -36,7 +36,14 @@ class AgentQuerySerializer(ModelSerializer):
 
     class Meta:
         model = AgentQuery
-        fields = ["agent", "token_usage", "startTimestamp", "endTimestamp", "response"]
+        fields = [
+            "pk",
+            "agent",
+            "token_usage",
+            "startTimestamp",
+            "endTimestamp",
+            "response",
+        ]
 
 
 class QuerySerializer(ModelSerializer):
