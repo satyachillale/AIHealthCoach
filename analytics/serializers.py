@@ -17,6 +17,9 @@ class AgentSerializer(ModelSerializer):
 
 
 class EdgeSerializer(ModelSerializer):
+    start = AgentSerializer()
+    end = AgentSerializer()
+
     class Meta:
         model = Edge
         fields = ["pk", "start", "end"]

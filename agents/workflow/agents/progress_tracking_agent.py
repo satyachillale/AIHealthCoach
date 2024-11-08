@@ -25,6 +25,14 @@ class ProgressTrackingAgent:
         self.progress["fitness"] = fitness_feedback
         self.progress["nutrition"] = nutrition_feedback
         self.progress["mental_health"] = mental_health_feedback
+        populate_workflow_db(
+            self.user_data,
+            self.agent_name,
+            self.tokens_produced,
+            startTime,
+            endTime,
+            return_data["progress"],
+        )
         return self.progress
 
     def generate_report(self):
@@ -70,14 +78,6 @@ class ProgressTrackingAgent:
         endTime = timezone.now()
         print("PROGRESS REPORT EMITTED")
         self.tokens_produced = count_characters_in_json(self.return_data) // 4
-        populate_workflow_db(
-            self.user_data,
-            self.agent_name,
-            self.tokens_produced,
-            startTime,
-            endTime,
-            return_data["progress"],
-        )
         return return_data
 
 
