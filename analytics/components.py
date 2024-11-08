@@ -6,7 +6,7 @@ from .init_graph import make_graph
 from .models import Agent, AgentQuery, Query
 
 
-def populate_query_db(user_data_instance, graph):
+def populate_query_db(user_data_instance):
     """Extracts specific fields from validated data and populates the Query model."""
     # Extract fields
 
@@ -16,11 +16,18 @@ def populate_query_db(user_data_instance, graph):
 
     # Create a descriptive query based on user data
     query_text = f"Fitness Goals: {fitness_goals}, Dietary Preferences: {dietary_preferences}, Mental Health Goals: {mental_health}"
-    gr = make_graph(graph)
     print("HERE")
     # Create a new Query object with the foreign key to UserData
-    query, created = Query.objects.get_or_create(query_text=query_text, graph=gr)
+    query = Query.objects.create(query_text=query_text)
     return query.id
+
+
+def update_graph(id, graph):
+
+    gr = make_graph(graph)
+    query = Query.objects.get(id=id)
+    query.graph = gr
+    query.save()
 
 
 def populate_workflow_db(

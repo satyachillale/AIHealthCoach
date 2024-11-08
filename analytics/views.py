@@ -4,6 +4,7 @@ from analytics.serializers import AgentSerializer, EdgeSerializer, QuerySerializ
 from analytics.utils.graph import get_master_graph
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render
+from rest_framework.views import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 
@@ -26,3 +27,36 @@ def graph_view(request: HttpRequest):
 class QueryViewSet(ReadOnlyModelViewSet):
     queryset = Query.objects.all()
     serializer_class = QuerySerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+
+        for query in serializer.data:
+            for agent in query["graph"]["nodes"]:
+                if agent.get("name") == "__end__":
+                    query["graph"]["nodes"].append(
+                        query["graph"]["nodes"].pop(
+                            query["graph"]["nodes"].index(agent)
+                        )
+                    )
+                    break
+        return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        for agent in serializer.data["graph"]["nodes"]:
+            if agent.get("name") == "__end__":
+                query["graph"]["nodes"].append(
+                    query["graph"]["nodes"].pop(query["graph"]["nodes"].index(agent))
+                )
+                break
+        return Response(serializer.data)

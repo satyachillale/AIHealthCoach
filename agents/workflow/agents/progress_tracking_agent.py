@@ -22,16 +22,18 @@ class ProgressTrackingAgent:
     def track_progress(
         self, fitness_feedback, nutrition_feedback, mental_health_feedback
     ):
+        startTime = timezone.now()
         self.progress["fitness"] = fitness_feedback
         self.progress["nutrition"] = nutrition_feedback
         self.progress["mental_health"] = mental_health_feedback
+        endTime = timezone.now()
         populate_workflow_db(
             self.user_data,
             self.agent_name,
             self.tokens_produced,
             startTime,
             endTime,
-            return_data["progress"],
+            self.progress,
         )
         return self.progress
 
