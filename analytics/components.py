@@ -1,7 +1,6 @@
 # analytics/utils.py
-from django.shortcuts import get_object_or_404
-
 from agents.models import UserData
+from django.shortcuts import get_object_or_404
 
 from .init_graph import make_graph
 from .models import Agent, AgentQuery, Query
@@ -24,7 +23,9 @@ def populate_query_db(user_data_instance, graph):
     return query.id
 
 
-def populate_workflow_db(user_data_instance, agent_name, tokens, startTime, endTime):
+def populate_workflow_db(
+    user_data_instance, agent_name, tokens, startTime, endTime, response
+):
     """Extracts specific fields from validated data and populates the Query model."""
     # Extract fields
     query_instance, created = Query.objects.get_or_create(
@@ -38,5 +39,5 @@ def populate_workflow_db(user_data_instance, agent_name, tokens, startTime, endT
         token_usage=tokens,
         startTimestamp=startTime,
         endTimestamp=endTime,
+        response=response,
     )
-

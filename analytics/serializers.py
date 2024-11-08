@@ -1,14 +1,13 @@
 from collections import OrderedDict
 
+from analytics.models import Agent, AgentQuery, Edge, Graph, Query
+from analytics.utils.graph import get_interactions
 from rest_framework.relations import PKOnlyObject
 from rest_framework.serializers import (
     BaseSerializer,
     ModelSerializer,
     SerializerMethodField,
 )
-
-from analytics.models import Agent, AgentQuery, Edge, Query
-from analytics.utils.graph import get_interactions
 
 
 class AgentSerializer(ModelSerializer):
@@ -24,17 +23,27 @@ class EdgeSerializer(ModelSerializer):
         depth = 2
 
 
+class GraphSerializer(ModelSerializer):
+    nodes = AgentSerializer(many=True)
+    edges = EdgeSerializer(many=True)
+
+    class Meta:
+        model = Graph
+        fields = ["id", "nodes", "edges"]
+
+
 class AgentQuerySerializer(ModelSerializer):
+
     class Meta:
         model = AgentQuery
-        fields = ["agent", "token_usage", "startTimestamp", "endTimestamp"]
-        depth = 2
+        fields = ["agent", "token_usage", "startTimestamp", "endTimestamp", "response"]
 
 
 class QuerySerializer(ModelSerializer):
     agent_queries = AgentQuerySerializer(source="get_agent_queries", many=True)
     total_tokens = SerializerMethodField()
     enriched_edges = SerializerMethodField()
+    graph = GraphSerializer()
 
     class Meta:
         model = Query

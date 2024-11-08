@@ -2,13 +2,12 @@ import json
 import os
 from pprint import pprint
 
+from agents.utils import count_characters_in_json
+from analytics.components import populate_workflow_db
 from django.utils import timezone
 from langchain.adapters.openai import convert_openai_messages
 from langchain_openai import ChatOpenAI
 from tavily import TavilyClient
-
-from agents.utils import count_characters_in_json
-from analytics.components import populate_workflow_db
 
 
 class ProgressTrackingAgent:
@@ -72,7 +71,12 @@ class ProgressTrackingAgent:
         print("PROGRESS REPORT EMITTED")
         self.tokens_produced = count_characters_in_json(self.return_data) // 4
         populate_workflow_db(
-            self.user_data, self.agent_name, self.tokens_produced, startTime, endTime
+            self.user_data,
+            self.agent_name,
+            self.tokens_produced,
+            startTime,
+            endTime,
+            return_data["progress"],
         )
         return return_data
 

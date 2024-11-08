@@ -1,9 +1,8 @@
+from agents.models import UserData
 from django.contrib.auth.models import (
     User,
 )  # Assumes you're using Django's default User model
 from django.db import models
-
-from agents.models import UserData
 
 
 # todo()
@@ -16,6 +15,7 @@ from agents.models import UserData
 class Agent(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=100)
+    model_name = models.CharField(max_length=20, default="GPT-4o")
 
 
 class Edge(models.Model):
@@ -55,5 +55,6 @@ class AgentQuery(models.Model):
     )  # Related Query
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE)  # Node ID
     token_usage = models.IntegerField()  # Token usage for this node
+    response = models.TextField(default="DEFAULT_RESPONSE")
     startTimestamp = models.DateTimeField()
     endTimestamp = models.DateTimeField()
