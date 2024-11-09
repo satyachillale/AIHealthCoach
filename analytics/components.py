@@ -3,7 +3,7 @@ from agents.models import UserData
 from django.shortcuts import get_object_or_404
 
 from .init_graph import make_graph
-from .models import Agent, AgentQuery, Query
+from .models import Agent, AgentQuery, Query, Stats
 
 
 def populate_query_db(user_data_instance):
@@ -23,7 +23,6 @@ def populate_query_db(user_data_instance):
 
 
 def update_graph(id, graph):
-
     gr = make_graph(graph)
     query = Query.objects.get(id=id)
     query.graph = gr
@@ -39,6 +38,11 @@ def populate_workflow_db(
         id=user_data_instance.get("query_id", 1)
     )
     agent, created = Agent.objects.get_or_create(name=agent_name)
+    if created:
+        agent.runtime_stats = Stats.objects.create()
+    time_taken = (endTime - startTime).total_seconds()
+    update_stats(agent.runtime_stats, time_taken)
+    update_stats(agent.token_usage_stats, tokens)
     # Create a new Query object with the foreign key to UserData
     agent_query, created = AgentQuery.objects.get_or_create(
         queryId=query_instance,
@@ -48,3 +52,22 @@ def populate_workflow_db(
         endTimestamp=endTime,
         response=response,
     )
+
+
+def update_stats(stats: Stats, val: float):
+    stats.count += 1
+
+    stats.sum_val += val
+    stats.sum_squares_val += val**2
+    # Update average
+    stats.average = stats.sum_val / stats.count
+
+    # Update min/max
+    stats.min_val = min(stats.min_val, val)
+    stats.max_val = max(stats.max_val, val)
+
+    # Update variance and standard deviation
+    mean = float(stats.average)
+    variance = (float(stats.sum_squares_val) / float(stats.count)) - (mean * mean)
+    stats.standard_deviation = float(float(stats.variance) ** 0.5)
+    stats.save()

@@ -4,16 +4,23 @@ from langgraph.graph import Graph
 
 from .models import Agent, Edge
 from .models import Graph as GraphModel
+from .models import Stats
 
 
 def make_graph(graph: Graph):
-    start_agent, _ = Agent.objects.get_or_create(name="__start__")
-    end_agent, _ = Agent.objects.get_or_create(name="__end__")
+    start_agent, created = Agent.objects.get_or_create(name="__start__")
+    if created:
+        start_agent.runtime_stats = Stats.objects.create()
+    end_agent, created = Agent.objects.get_or_create(name="__end__")
+    if created:
+        end_agent.runtime_stats = Stats.objects.create()
     agents = Agent.objects.get_queryset().filter(id__in=[start_agent.id, end_agent.id])
     agent_names = []
     for node in graph.nodes:
         print(node)
         agent, created = Agent.objects.get_or_create(name=node)
+        if created:
+            agent.runtime_stats = Stats.objects.create()
         agent.save()
         agent = Agent.objects.get_queryset().filter(id=agent.id)
         agents |= agent
