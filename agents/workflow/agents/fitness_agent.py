@@ -23,10 +23,10 @@ class FitnessAgent:
         self.tokens_produced = 0
 
     def create_workout_plan(self):
-        context = self.tavily_client.get_search_context(
-            query=f"workout plan for {self.user_data['age']} year old, {self.user_data['weight']} kg {self.user_data.get('gender', '')} person",
-            search_depth="advanced",
-        )
+        # context = self.tavily_client.get_search_context(
+        #     query=f"workout plan for {self.user_data['age']} year old, {self.user_data['weight']} kg {self.user_data.get('gender', '')} person",
+        #     search_depth="advanced",
+        # )
         fitness_goals = self.user_data["fitness_goals"].lower()
 
         prompt = [
@@ -37,7 +37,6 @@ class FitnessAgent:
             {
                 "role": "user",
                 "content": f"User data: {self.user_data}\n"
-                f"Additional context: {context}\n"
                 f"Create a workout plan for a {self.user_data['age']} year old, {self.user_data['weight']} kg person "
                 f"with the goal to {fitness_goals}.\n"
                 f"Please return the plan in the following JSON format:\n"

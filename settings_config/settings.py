@@ -27,9 +27,9 @@ SECRET_KEY = "kl%^_2+ow&yo4&yqrh83$8lly4=aesb+6zf=__1$wraa0ddy5#"
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "healthcoachai.pythonanywhere.com",
-    "127.0.0.1",
-    "https://health-coach-ai.vercel.app",
+    "driftai.pythonanywhere.com",
+    "localhost",
+    "https://driftai.vercel.app",
 ]
 
 
@@ -62,8 +62,8 @@ MIDDLEWARE = [
 # CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins for testing, restrict this in production
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "https://healthcoachai.pythonanywhere.com",
-    "https://health-coach-ai.vercel.app",
+    "https://driftai.pythonanywhere.com",
+    "https://driftai.vercel.app",
 ]
 
 ROOT_URLCONF = "settings_config.urls"

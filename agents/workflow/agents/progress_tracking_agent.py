@@ -38,9 +38,9 @@ class ProgressTrackingAgent:
         return self.progress
 
     def generate_report(self):
-        context = self.tavily_client.get_search_context(
-            query=f"progress report for {self.user_data['name']} with feedback: Fitness: {self.progress['fitness']}, Nutrition: {self.progress['nutrition']}, Mental Health: {self.progress['mental_health']}"
-        )
+        # context = self.tavily_client.get_search_context(
+        #     query=f"progress report for {self.user_data['name']} with feedback: Fitness: {self.progress['fitness']}, Nutrition: {self.progress['nutrition']}, Mental Health: {self.progress['mental_health']}"
+        # )
 
         report_prompt = [
             {
@@ -50,7 +50,6 @@ class ProgressTrackingAgent:
             {
                 "role": "user",
                 "content": f"User data: {self.user_data}\n"
-                f"Additional context: {context}\n"
                 f"Feedback: Fitness: {self.progress['fitness']}, Nutrition: {self.progress['nutrition']}, "
                 f"Mental Health: {self.progress['mental_health']}.\n"
                 f"Generate a progress report.\n"

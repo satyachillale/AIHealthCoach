@@ -21,10 +21,10 @@ class NutritionAgent:
         self.tokens_produced = 0
 
     def create_meal_plan(self):
-        context = self.tavily_client.get_search_context(
-            query=f"meal plan for {self.user_data.get('gender', '')} person who is {self.user_data['age']} year old, weighs {self.user_data['weight']} kg person with dietary preferences: {self.user_data['dietary_preferences']}",
-            search_depth="advanced",
-        )
+        # context = self.tavily_client.get_search_context(
+        #     query=f"meal plan for {self.user_data.get('gender', '')} person who is {self.user_data['age']} year old, weighs {self.user_data['weight']} kg person with dietary preferences: {self.user_data['dietary_preferences']}",
+        #     search_depth="advanced",
+        # )
         dietary_preferences = self.user_data["dietary_preferences"]
         prompt = [
             {
@@ -34,7 +34,6 @@ class NutritionAgent:
             {
                 "role": "user",
                 "content": f"User data: {self.user_data}\n"
-                f"Additional context: {context}\n"
                 f"Create a meal plan for a {self.user_data['age']} year old, {self.user_data['weight']} kg person "
                 f"with dietary preferences: {dietary_preferences}.\n"
                 f"Please return the plan in the following JSON format:\n"
