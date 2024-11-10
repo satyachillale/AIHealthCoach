@@ -1,14 +1,14 @@
 from concurrent.futures import ThreadPoolExecutor
 from pprint import pprint
 
-from langgraph.graph import Graph
-
 from agents.workflow.agents import (
     FitnessAgent,
-    NutritionAgent,
     MentalHealthAgent,
+    NutritionAgent,
     ProgressTrackingAgent,
 )
+from analytics.components import populate_query_db, update_graph
+from langgraph.graph import Graph
 
 
 class Workflow:
@@ -23,6 +23,8 @@ class Workflow:
         print("User data: \n")
         print(self.user_data)
 
+        id = populate_query_db(self.user_data)
+        self.user_data["query_id"] = id
         # Initialize agents
         fitness_agent = FitnessAgent(self.user_data)
         nutrition_agent = NutritionAgent(self.user_data)
@@ -56,7 +58,8 @@ class Workflow:
 
         # Compile the graph
         chain = graph.compile()
-
+        update_graph(self.user_data["query_id"], graph)
+        # call to the components.py function - query db
         # Execute the graph for each query in parallel
         with ThreadPoolExecutor() as executor:
             results = list(executor.map(lambda _: chain.invoke({}), [{}]))

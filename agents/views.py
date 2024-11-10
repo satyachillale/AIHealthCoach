@@ -1,17 +1,18 @@
+from pprint import pprint
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
+from agents.models import HealthPlan, UserData
+
 # Create your views here.
 from agents.serializers import (
+    GuidedHealthPlanSerializer,
     HealthPlanSerializer,
     ModifiedHealthPlanSerializer,
-    GuidedHealthPlanSerializer,
 )
-from pprint import pprint
-
 from agents.workflow import Workflow
-from agents.models import UserData, HealthPlan
 from analytics.components import populate_query_db
 
 
@@ -39,10 +40,6 @@ class Agents(GenericViewSet):
 
         try:
             user_data_entry = UserData.objects.create(**validated_data)
-            validated_data["queryId"] = user_data_entry.queryId
-
-            # call to the components.py function - query db
-            populate_query_db(user_data_entry)
         except Exception as e:
             result["error"] = str(e)
             return Response(data=result, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
