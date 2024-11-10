@@ -27,6 +27,7 @@ SECRET_KEY = "kl%^_2+ow&yo4&yqrh83$8lly4=aesb+6zf=__1$wraa0ddy5#"
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    "127.0.0.1",
     "driftai.pythonanywhere.com",
     "localhost",
     "https://driftai.vercel.app",
