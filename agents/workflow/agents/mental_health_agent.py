@@ -23,10 +23,10 @@ class MentalHealthAgent:
         mental_health_goals = self.user_data["mental_health_goals"]
 
         if not feedback:
-            context = self.tavily_client.get_search_context(
-                query=f"wellness tips for {self.user_data['age']} year old {self.user_data.get('gender', '')} person with goal to {self.user_data['mental_health_goals']}",
-                search_depth="advanced",
-            )
+            # context = self.tavily_client.get_search_context(
+            #     query=f"wellness tips for {self.user_data['age']} year old {self.user_data.get('gender', '')} person with goal to {self.user_data['mental_health_goals']}",
+            #     search_depth="advanced",
+            # )
 
             prompt = [
                 {
@@ -36,7 +36,6 @@ class MentalHealthAgent:
                 {
                     "role": "user",
                     "content": f"User data: {self.user_data}\n"
-                    f"Additional context: {context}\n"
                     f"Provide mental wellness tips for someone looking to {mental_health_goals}.\n"
                     f"Please return the tips in the following JSON format:\n"
                     f'{{"wellness_tips": ["Tip 1", "Tip 2", "Tip 3", "Tip 4"]}}\n',

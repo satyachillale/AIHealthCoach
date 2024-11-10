@@ -48,4 +48,3 @@ class GuidedHealthPlanSerializer(serializers.Serializer):
         if value.lower() == "prefer to not say":
             return ""
         return value
-

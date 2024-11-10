@@ -29,7 +29,7 @@ class QueryViewSet(ReadOnlyModelViewSet):
     serializer_class = QuerySerializer
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset = self.filter_queryset(self.get_queryset()).order_by("-id")
 
         page = self.paginate_queryset(queryset)
         if page is not None:
