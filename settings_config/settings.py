@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
     "driftai.pythonanywhere.com",
     "localhost",
     "https://driftai.vercel.app",
+    "https://dashboard.ebonwinglabs.com",
 ]
 
 
@@ -65,6 +66,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://driftai.pythonanywhere.com",
     "https://driftai.vercel.app",
+    "https://dashboard.ebonwinglabs.com",
 ]
 
 ROOT_URLCONF = "settings_config.urls"
